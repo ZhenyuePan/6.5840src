@@ -1,0 +1,4 @@
+github.com/anishathalye/porcupine v1.0.0 h1:93eF6d26IMDky+G4h8FcLuYp1oO+no8a//I7asq/oKI=
+github.com/anishathalye/porcupine v1.0.0/go.mod h1:WM0SsFjWNl2Y4BqHr/E/ll2yY1GY1jqn+W7Z/84Zoog=
+github.com/pkg/errors v0.9.1 h1:FEBLx1zS214owpjy7qsBeixbURkuhQAwrK5UwLGTwt4=
+github.com/pkg/errors v0.9.1/go.mod h1:bwawxfHBFNV+L2hUp1rHADufV3IMtnDRdf1r5NINEl0=

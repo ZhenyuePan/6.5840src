@@ -17,14 +17,6 @@ const (
 	TaskStatusCompleted
 )
 
-// 定义任务类型常量
-const (
-	TaskTypeMap = iota
-	TaskTypeReduce
-	TaskTypeWait
-	TaskTypeDone
-)
-
 type Coordinator struct {
 	// Your definitions here.
 	nReduce        int // number of reduce tasks
@@ -69,7 +61,7 @@ func (c *Coordinator) AllocateTask(args *WorkerArgs, reply *WorkerReply) error {
 		for i := 0; i < c.nMap; i++ {
 			if c.mapTaskLog[i] == TaskStatusUnassigned {
 				// 分配任务
-				reply.Tasktype = TaskTypeMap
+				reply.Tasktype = MapTask
 				reply.MapTaskId = i
 				reply.Filename = c.files[i]
 				reply.NReduce = c.nReduce
@@ -92,7 +84,7 @@ func (c *Coordinator) AllocateTask(args *WorkerArgs, reply *WorkerReply) error {
 		}
 
 		// 所有Map任务都已分配但未完成
-		reply.Tasktype = TaskTypeWait
+		reply.Tasktype = Waiting
 		return nil
 	}
 
@@ -102,7 +94,7 @@ func (c *Coordinator) AllocateTask(args *WorkerArgs, reply *WorkerReply) error {
 		for i := 0; i < c.nReduce; i++ {
 			if c.reduceTaskLog[i] == TaskStatusUnassigned {
 				// 分配任务
-				reply.Tasktype = TaskTypeReduce
+				reply.Tasktype = ReduceTask
 				reply.ReduceTaskId = i
 				reply.NMap = c.nMap
 
@@ -123,12 +115,12 @@ func (c *Coordinator) AllocateTask(args *WorkerArgs, reply *WorkerReply) error {
 		}
 
 		// 所有Reduce任务都已分配但未完成
-		reply.Tasktype = TaskTypeWait
+		reply.Tasktype = Waiting
 		return nil
 	}
 
 	// Phase 3: 所有任务已完成
-	reply.Tasktype = TaskTypeDone
+	reply.Tasktype = JobFinished
 	return nil
 }
 
